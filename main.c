@@ -28,7 +28,10 @@ char writeOver(int fd, int filesize) {
       written = write(fd, buffer, dataLeft);
     } else 
       written = write(fd, buffer, outSize);
-      
+
+
+    dataLeft -= written;
+    
     //stop on failure to write
     if (written <= 0)
       break;
