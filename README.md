@@ -6,9 +6,9 @@ Securely delete files!
 
 ###    How it works:
         1. Opens the file to be delete
-	        2. Overwrite file content with garbage
-		        3. Save the file
-			        4. Then unlink the file
+	2. Overwrite file content with garbage
+	3. Save the file
+	4. Then unlink the file
 
 ###    Building
     gcc main.c -o rms
