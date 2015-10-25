@@ -70,7 +70,7 @@ int main (int argc, char *argv[]) {
   }
   
   //delete file
-  //unlink(filepath);
+  unlink(filepath);
   
   return 0;
 }
