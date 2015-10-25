@@ -28,7 +28,10 @@ char writeOver(int fd, int filesize) {
       written = write(fd, buffer, dataLeft);
     } else 
       written = write(fd, buffer, outSize);
-      
+
+
+    dataLeft -= written;
+    
     //stop on failure to write
     if (written <= 0)
       break;
@@ -67,7 +70,7 @@ int main (int argc, char *argv[]) {
   }
   
   //delete file
-  unlink(filepath);
+  //unlink(filepath);
   
   return 0;
 }
