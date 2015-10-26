@@ -10,8 +10,14 @@ Securely delete files!
 	3. Save the file
 	4. Then unlink the file
 
-###    Building
+###    Building (OS X)
     gcc main.c -o rms
+
+###	Building (Linux)
+	Install Dependencies
+		sudo apt-get install libbsd-dev
+
+	gcc -lbsd main.c -o rms
 
 
 If file does happen to be recovered, the only data recovered will be garbage.
