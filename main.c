@@ -8,6 +8,7 @@
 
 #define BUF_SIZE 1024
 
+//fills file with random data
 char writeOver(int fd, int filesize) {
 
   char buffer[BUF_SIZE];
