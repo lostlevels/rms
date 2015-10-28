@@ -14,10 +14,16 @@
   #define PATH_MAX 4096
 #endif
 
-//fills file with random data
-char writeOver(int fd, int filesize) {
 
-  char buffer[BUF_SIZE];
+//fills file with random data
+char writeOver(int fd, int filesize, unsigned int blockSize) {
+
+  //char buffer[blockSize];
+  char *buffer = malloc(blockSize * sizeof(char));
+  if (!buffer) {
+      close(fd);
+      return -1;
+  }
 
   int dataLeft = filesize;
   int outSize = sizeof(buffer);
@@ -39,11 +45,14 @@ char writeOver(int fd, int filesize) {
     //stop on failure to write
     if (written <= 0)
       break;
-
+  
   }
 
+  close(fd);
+  free(buffer);
   return errno;
 }
+
 
 int deleteFile(const char *filepath) {
   printf("Error pre is %s \n", strerror(errno));
@@ -55,7 +64,7 @@ int deleteFile(const char *filepath) {
 
   struct stat st = {};
   lstat(filepath, &st);
-  if (writeOver(fd, st.st_size)) {
+  if (writeOver(fd, st.st_size, BUF_SIZE)) {
     fprintf(stderr, "Error overwriting file.\n");
     return 3;
   }
