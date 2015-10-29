@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <dirent.h>
 #include <string.h>
+#include <time.h>
 
 #define BUF_SIZE 131072
 
@@ -27,10 +28,14 @@ int writeOver(int fd, int filesize, unsigned int blockSize) {
   int dataLeft = filesize;
   int outSize = bufSize;
 
+  srand(time(NULL));
   while(dataLeft > 0) {
     size_t written = 0;
     //generate random data to write
-    arc4random_buf(buffer, outSize);
+    // arc4random_buf(buffer, outSize);
+    int i;
+    for (i = 0; i < outSize; i++)
+      buffer[i] = rand () % 256;
 
     if (dataLeft < outSize) {
       //make sure we aren't writing more data than

@@ -1,5 +1,5 @@
 # RMS (RM Secure)
-Securely delete files!
+Securely delete files! [![Build Status](https://travis-ci.org/wafflebattles/rms.svg)](https://travis-ci.org/wafflebattles/rms)
 
 ###    Syntax:
 	rms 'path to file to delete'
