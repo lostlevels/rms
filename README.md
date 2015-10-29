@@ -3,6 +3,7 @@ Securely delete files!
 
 ###    Syntax:
 	rms 'path to file to delete'
+  rms -rf 'path to folder to delete'
 
 ###    How it works:
 	1. Opens the file to be delete
