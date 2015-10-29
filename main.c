@@ -19,14 +19,15 @@
 char writeOver(int fd, int filesize, unsigned int blockSize) {
 
   //char buffer[blockSize];
-  char *buffer = malloc(blockSize * sizeof(char));
+  size_t bufSize = blockSize * sizeof(char);
+  char *buffer = malloc(bufSize);
   if (!buffer) {
       close(fd);
       return -1;
   }
 
   int dataLeft = filesize;
-  int outSize = sizeof(buffer);
+  int outSize = bufSize;
 
   while(dataLeft > 0) {
     size_t written = 0;
