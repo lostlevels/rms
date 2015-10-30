@@ -26,23 +26,22 @@ int writeOver(int fd, int filesize, unsigned int blockSize) {
   }
 
   int dataLeft = filesize;
-  int outSize = bufSize;
 
   srand(time(NULL));
   while(dataLeft > 0) {
     size_t written = 0;
     //generate random data to write
-    // arc4random_buf(buffer, outSize);
+    // arc4random_buf(buffer, bufSize);
     int i;
-    for (i = 0; i < outSize; i++)
+    for (i = 0; i < bufSize; i++)
       buffer[i] = rand () % 256;
 
-    if (dataLeft < outSize) {
+    if (dataLeft < bufSize) {
       //make sure we aren't writing more data than
       //the original file
       written = write(fd, buffer, dataLeft);
     } else
-      written = write(fd, buffer, outSize);
+      written = write(fd, buffer, bufSize);
 
     dataLeft -= written;
 
