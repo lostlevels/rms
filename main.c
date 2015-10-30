@@ -1,22 +1,32 @@
 #include "rms.h"
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int main (int argc, const char *argv[]) {
-  if (argc < 2) {
-    fprintf(stderr, "Missing filepath.\n");
-    return 1;
-  }
-
-  if (!strcmp(argv[1], "-r") || !strcmp(argv[1], "-rf")) {
-    if (argc < 3 || !argv[2]) {
-      fprintf(stderr, "Missing filepath");
-      return 1;
-    }
-    return deleteFiles(argv[2]);
-  }
-  else {
-    return deleteFile(argv[1]);
-  }
+int main (int argc, char *argv[]) {
+  int c;
+  int recurs = 0;
+  int writeSize = 0;
+	while ((c = getopt (argc, argv, "rfs:")) != -1) {
+		switch (c) {
+			case 's':
+				writeSize=strtol(optarg, NULL, 10);
+				break;
+			case 'f':
+				break;
+			case 'r':
+				recurs=1;
+				break;
+			default:
+				abort();
+		}
+	}
+	switch(recurs) {
+		case 1:
+			deleteFiles(argv[optind]);
+			break;
+		default:
+			deleteFile(argv[optind]);
+	}
 }
