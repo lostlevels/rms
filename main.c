@@ -22,6 +22,11 @@ int main (int argc, char *argv[]) {
 				abort();
 		}
 	}
+	
+	if (optind > argc - 1) {
+		return 0;
+	}
+	
 	switch(recurs) {
 		case 1:
 			deleteFiles(argv[optind]);
