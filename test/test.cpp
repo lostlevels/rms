@@ -8,7 +8,7 @@
 using namespace bandit;
 
 #define FILENAME "myfile.txt"
-#define DIRECTORY "folder"
+#define DIRECTORY "folder/"
 #define CONTENTS "The quick brown fox jumps over the lazy dog."
 
 static void createFile() {
@@ -17,38 +17,37 @@ static void createFile() {
   close(fd);
 }
 
-static void deleteFile() {
-  unlink(FILENAME);
+static int deleteFile() {
+  return unlink(FILENAME);
 }
 
 static bool fileExists() {
-  return access(FILENAME, F_OK) != -1;
+  return fileExists(FILENAME);
 }
 
-static void createDirectory() {
-  mkdir(DIRECTORY, 0777);
+static int createDirectory() {
+  return mkdir(DIRECTORY, 0777);
 }
 
-static void deleteDirectory() {
-  rmdir(DIRECTORY);
+static int deleteDirectory() {
+  return rmdir(DIRECTORY);
 }
 
 static bool directoryExists() {
-  return access(DIRECTORY, F_OK) != -1;
+  return fileExists(DIRECTORY);
 }
 
 go_bandit([] {
-  describe("librms:", [] {
-
-    describe("isDirectory:", [] {
+  describe("librms: ", [] {
+    describe("isDirectory: ", [] {
       before_each([] {
         createFile();
         createDirectory();
       });
 
       after_each([] {
-        deleteFile();
         deleteDirectory();
+        deleteFile();
       });
 
       it("returns true if directory", [] {
@@ -56,15 +55,15 @@ go_bandit([] {
       });
 
       it("returns false if file", [] {
-        AssertThat(isDirectory(DIRECTORY), Equals(true));
+        AssertThat(isDirectory(FILENAME), Equals(false));
       });
 
       it("returns false if doesn't exist.", [] {
-        AssertThat(isDirectory("surely this file does not exist.foo.bar"), Equals(false));
+        AssertThat(isDirectory("surely_this_folder_does_not_exist"), Equals(false));
       });
     });
 
-    describe("isDotDirectory:", [] {
+    describe("isDotDirectory: ", [] {
       it("returns true for dot directory", [] {
         AssertThat(isDotDirectory("."), Equals(true));
         AssertThat(isDotDirectory(".."), Equals(true));
@@ -79,7 +78,7 @@ go_bandit([] {
       });
     });
 
-    describe("writeOver:", [] {
+    describe("writeOver: ", [] {
       before_each([] {
         createFile();
         AssertThat(fileExists(), Equals(true));
@@ -87,8 +86,9 @@ go_bandit([] {
         char buffer[8192];
         int fd = open(FILENAME, O_RDWR);
         read(fd, buffer, sizeof(CONTENTS));
-        AssertThat(strcmp(buffer, CONTENTS), Equals(0));
         close(fd);
+
+        AssertThat(strcmp(buffer, CONTENTS), Equals(0));
       });
 
       after_each([] {
@@ -105,7 +105,17 @@ go_bandit([] {
         read(fd, buffer, sizeof(CONTENTS));
         close(fd);
 
-        AssertThat(strcmp(buffer, CONTENTS), !Equals(0));
+        AssertThat(strcmp(buffer, CONTENTS), Is().Not().EqualTo(0));
+      });
+    });
+
+    describe("deleteFile: ", [] {
+      it("should delete file", [] {
+        createFile();
+        AssertThat(fileExists(), Equals(true));
+
+        AssertThat(deleteFile(FILENAME), Equals(0));
+        AssertThat(fileExists(), Equals(false));
       });
     });
   });

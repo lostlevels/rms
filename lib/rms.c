@@ -77,12 +77,17 @@ int deleteFile(const char *filepath) {
 }
 
 bool isDirectory(const char *filepath) {
-  DIR *dir;
-  if ((dir = opendir(filepath))) {
-    closedir(dir);
-    return true;
-  }
-  return false;
+  if (!fileExists(filepath)) return false;
+
+  struct stat st;
+  lstat(filepath, &st);
+  return S_ISDIR(st.st_mode);
+}
+
+bool fileExists(const char *filepath) {
+  bool result = access(filepath, F_OK) != -1;
+  errno = 0;
+  return result;
 }
 
 bool isDotDirectory(const char *filename) {

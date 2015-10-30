@@ -13,6 +13,7 @@ bool isDirectory(const char *filepath);
 bool isDotDirectory(const char *filename);
 const char *pathJoin(const char *dir, const char *file);
 int deleteFiles(const char *directory);
+bool fileExists(const char *filepath);
 
 #ifdef __cplusplus
 }
