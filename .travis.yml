@@ -1,0 +1,17 @@
+language: cpp
+compiler: g++
+sudo: false
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake ..
+
+script: make test && test/test --reporter=spec
