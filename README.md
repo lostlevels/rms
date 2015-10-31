@@ -15,9 +15,9 @@
 	4. Then unlink the file
 
 ###    Building
-##### GCC
+##### with only GCC
 ```gcc main.c lib/rms.c -Ilib  -o rms```
-##### CMAKE
+##### with CMAKE
 ```cmake path/to/rms/folder && make```
 
 If file does happen to be recovered, the only data recovered will be garbage.
