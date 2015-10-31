@@ -1,5 +1,8 @@
 # RMS (RM Secure)
-Securely delete files! [![Build Status](https://travis-ci.org/wafflebattles/rms.svg)](https://travis-ci.org/wafflebattles/rms)
+
+[![Build Status](https://travis-ci.org/lostlevels/rms.svg)](https://travis-ci.org/lostlevels/rms)
+
+### Securely delete files!
 
 ###    Syntax:
 	rms 'path to file to delete'
@@ -11,7 +14,10 @@ Securely delete files! [![Build Status](https://travis-ci.org/wafflebattles/rms.
 	3. Save the file
 	4. Then unlink the file
 
-###    Building (OS X)
-		run cmake
+###    Building
+##### GCC
+```gcc main.c lib/rms.c -Ilib  -o rms```
+##### CMAKE
+```cmake path/to/rms/folder && make```
 
 If file does happen to be recovered, the only data recovered will be garbage.
