@@ -21,3 +21,8 @@
 ```cmake path/to/rms/folder && make```
 
 If file does happen to be recovered, the only data recovered will be garbage.
+
+### File Deletion Times
+	- Deleting a file of size 1M: 0.017 seconds
+	- Deleting a file of size 100M: 1.190 seconds
+	- Deleting a file of size 1G: 12.018 seconds
