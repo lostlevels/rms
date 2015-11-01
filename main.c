@@ -27,11 +27,13 @@ int main (int argc, char *argv[]) {
     return 0;
   }
 
+  int status = 0;
   switch(recurs) {
     case 1:
-      deleteFiles(argv[optind]);
+      status = deleteFiles(argv[optind]);
       break;
     default:
-      deleteFile(argv[optind]);
+      status = deleteFile(argv[optind]);
   }
+  return status;
 }
