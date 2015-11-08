@@ -5,9 +5,11 @@
 #include <string.h>
 
 int main (int argc, char *argv[]) {
-  int c;
-  int recurs = 0;
-  int writeSize = 0;
+  int c =0;
+
+  //switches
+  int recurs = 0, writeSize = 0;
+
   while ((c = getopt (argc, argv, "rfs:")) != -1) {
     switch (c) {
       case 's':
@@ -22,18 +24,24 @@ int main (int argc, char *argv[]) {
         abort();
     }
   }
-  
-  if (optind > argc - 1) {
-    return 0;
+
+  int argNum = optind;
+  int status = 0;
+
+  //continue deleting files passed into arguments until no more or error
+  while(!status && argNum < argc) {
+
+    switch(recurs) {
+	    case 1:
+	      status = deleteFiles(argv[argNum]);
+	      break;
+	    default:
+	      status = deleteFile(argv[argNum]);
+        break;
+	  }
+
+    argNum++;
   }
 
-  int status = 0;
-  switch(recurs) {
-    case 1:
-      status = deleteFiles(argv[optind]);
-      break;
-    default:
-      status = deleteFile(argv[optind]);
-  }
   return status;
 }
